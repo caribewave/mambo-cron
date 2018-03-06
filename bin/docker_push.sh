@@ -1,3 +1,3 @@
 #!/bin/bash
 docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-docker push handmambo/tile-api
+docker push handmambo/sensor-api
