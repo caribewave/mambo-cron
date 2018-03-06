@@ -11,7 +11,7 @@ install:
 - npm install
 script:
 - npm test
-- docker build -t handmambo/tile-api .
+- docker build -t handmambo/sensor-api .
 deploy:
   provider: script
   script: bash bin/docker_push.sh
