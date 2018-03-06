@@ -4,11 +4,11 @@ RUN mkdir -p /opt/mambo/tiles
 
 COPY ./index.js /opt/mambo/
 COPY ./package.json /opt/mambo/
-COPY ./lib /opt/mambo/lib
+COPY ./src /opt/mambo/src
 
 WORKDIR /opt/mambo
 
 RUN npm install
 
-EXPOSE 8081
+EXPOSE 8082
 CMD npm start
