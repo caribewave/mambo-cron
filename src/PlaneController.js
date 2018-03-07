@@ -49,7 +49,7 @@ async function onGetLoc(req, res) {
   // let result = await Plane.find(query);
 
   result = [{
-    "location": {"type": "Point", "coordinates": [[49.602247, 1.339664], [49.602247, 1.339666g]]},
+    "location": {"type": "Point", "coordinates": [[49.602247, 1.339664], [49.602247, 1.339666]]},
     "_id": "5a9ff37e3219088decdfd69a",
     "hex": "400685",
     "seen_pos": 5.1,
