@@ -16,6 +16,14 @@ To run the server, simply run ```npm start```.
 The app is listening on port 8082 by default.
 
 
-## API
+## Environment
 
+### 1. Development environment
+To spawn your development environment, use:
+```
+docker run --name mambo-mongo -d -p 27017:27017 mongo
+npm start
+```
+
+## API
 
