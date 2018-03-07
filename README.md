@@ -1,5 +1,8 @@
 # Mambo Tile API
 
+Develop Branch: ![https://travis-ci.org/caribewave/mambo-sensor-api.svg?branch=develop](Build status on Develop)  
+Master Branch: ![https://travis-ci.org/caribewave/mambo-sensor-api.svg?branch=master](Build status on Master)  
+
 This project will behave as the dedicated TMS tile-server for the Mambo Project (Hackers Against Natural Disasters).
 
 It uses a lightweight tile-server (tilestrata) and supports both file tiles (cache), mbtiles, and proxy layers.
