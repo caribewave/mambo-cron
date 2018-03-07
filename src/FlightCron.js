@@ -23,8 +23,6 @@ module.exports = class FlightCron {
             plane = new Plane(obj);
             plane.location.coordinates = [obj.lat, obj.lon];
 
-            console.log(plane);
-
             plane.save();
           }
         }
