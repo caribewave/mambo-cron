@@ -15,7 +15,7 @@ To run the server, simply run ```npm start```.
 
 The app is listening on port 8082 by default.
 
-``http://localhost:8082/planes/loc?ws=[49.6022471,1]&ne=[49.6022471,1]``
+``http://localhost:8082/planes/loc?bbox=(48.945409, 2.127181,48.723545, 2.659945)``
 
 ## Environment
 
