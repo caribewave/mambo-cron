@@ -14,7 +14,7 @@ app.use(cors());
 app.use('/planes', PlaneController);
 
 app.get('/', (req, res) => {
-      res.end('Bonjour à tous');g
+      res.end('Bonjour à tous');
     }
 );
 

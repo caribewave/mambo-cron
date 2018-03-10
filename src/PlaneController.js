@@ -1,17 +1,8 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const Plane = require('./Plane');
 
 let app = express();
 
-let aggregate = [
-  {
-    $group: {
-      _id: "$hex",
-      coordinates: {$push: "$location"}
-    }
-  }
-];
 
 function onGetAll(req, res) {
   let planes = "test";
@@ -23,41 +14,30 @@ function onGetAll(req, res) {
 }
 
 async function onGetLoc(req, res) {
-  let lat = req.query.lat;
-  let lng = req.query.lng;
+  let lat = Number.parseFloat(req.query.lat) || 0;
+  let lng = Number.parseFloat(req.query.lng) || 10000;
 
-  lat = 49.602247;
-  lng = 1.339664;
+  let aggregate = [
+    {
+      $geoNear: {
+        near: {type: "Point", coordinates: [lat, lng]},
+        distanceField: "dist.calculated",
+        maxDistance: max,
+        includeLocs: "dist.location",
+        // num: 5,
+        spherical: true
+      }
+    },
+    {
+      $group: {
+        _id: "$hex",
+        coordinates: {$push: "$location.coordinates"},
+        dist: {$push: "$dist"}
+      }
+    }
+  ];
 
-  let min = req.query.min || 0;
-  let max = req.query.max || 10000;
-
-
-  let query = {
-    location:
-        {
-          $near:
-              {
-                $geometry: {type: "Point", coordinates: [lat, lng]},
-                $minDistance: min,
-                $maxDistance: max
-              }
-        }
-  };
-
-
-  // let result = await Plane.find(query);
-
-  result = [{
-    "location": {"type": "Point", "coordinates": [[49.602247, 1.339664], [49.602247, 1.339666]]},
-    "_id": "5a9ff37e3219088decdfd69a",
-    "hex": "400685",
-    "seen_pos": 5.1,
-    "altitude": 36700,
-    "messages": 10,
-    "seen": 4.3,
-    "__v": 0
-  }];
+  let result = await Plane.aggregate(aggregate);
   res.end(JSON.stringify(result));
 }
 
