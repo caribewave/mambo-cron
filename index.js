@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const FlightCron = require('./src/FlightCron');
-const PlaneController = require('./src/PlaneController');
+const FlightCron = require('./src/cron/FlightCron');
+const PlaneController = require('./src/plane/plane.controller');
 
 let app = express();
 

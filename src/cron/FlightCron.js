@@ -1,5 +1,5 @@
 const axios = require('axios');
-const PlaneService = new (require('./PlaneService'))();
+const PlaneService = require('../plane/plane.service');
 const host = 'http://vps358558.ovh.net:2050/dump1090/data/aircraft.json';
 
 
@@ -17,8 +17,6 @@ module.exports = class FlightCron {
         PlaneService.save(obj);
       });
     }
-
-
   }
 };
 

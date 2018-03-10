@@ -1,9 +1,6 @@
-const mongoose = require('mongoose');
-const Plane = require('./Plane')
+const Plane = require('./plane');
 
-module.exports = class PlaneService {
-
-
+const PlaneService = {
   async save(obj) {
     if (obj.lat && obj.lon && obj.hex) {
       let plane = await this.find(obj.hex, obj.lat, obj.lon);
@@ -15,15 +12,42 @@ module.exports = class PlaneService {
         plane.save();
       }
     }
-  }
+  },
+
+  async findByBbox(bbox) {
+    let ne = [bbox[2], bbox[3]];
+    let sw = [bbox[0], bbox[1]];
+
+    bbox = [sw, ne];
+
+    let aggregate = [
+      {
+        $match: {
+          location: {
+            $geoWithin: {
+              $box: bbox
+            }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$hex",
+          coordinates: {$push: "$location.coordinates"},
+        }
+      }
+    ];
 
 
-  async find(hex, lat, lng) {
-    return Plane.find()
-                .where('hex')
-                .equals(hex)
-                .where('location.coordinates')
-                .equals([lat, lng])
-                .exec();
+    let result = {};
+    result.bboxRequested = bbox;
+    result.points = await Plane.aggregate(aggregate);
+    return result;
+  },
+
+  async findAll() {
+    return await Plane.find({});
   }
 };
+
+module.exports = PlaneService;

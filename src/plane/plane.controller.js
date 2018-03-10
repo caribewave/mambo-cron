@@ -1,15 +1,14 @@
 const express = require('express');
-const Plane = require('./Plane');
+const planeService = require('./plane.service');
 
 let app = express();
 
 
-function onGetAll(req, res) {
-  Plane.find({}, (err, results) => {
-    planes = results;
-    res.end(JSON.stringify(planes));
-  });
-
+async function onGetAll(req, res) {
+  let result = await planeService.findAll();
+  result = JSON.stringify(result);
+  res.setHeader('Content-Type', 'application/json');
+  res.end(result);
 }
 
 async function onGetLoc(req, res) {
@@ -22,37 +21,9 @@ async function onGetLoc(req, res) {
     bbox[i] = Number.parseFloat(coord);
   });
 
-  let ne = [bbox[2], bbox[3]];
-  let sw = [bbox[0], bbox[1]];
+  let result = await planeService.findByBbox(bbox);
 
-  bbox = [sw, ne];
-
-  let aggregate = [
-    {
-      $match: {
-        location: {
-          $geoWithin: {
-            $box: bbox
-          }
-        }
-      }
-    },
-    {
-      $group: {
-        _id: "$hex",
-        coordinates: {$push: "$location.coordinates"},
-      }
-    }
-  ];
-
-
-  let result = {};
-  result.bboxRequested = bbox;
-  result.points = await Plane.aggregate(aggregate);
-
-
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(result));
+  res.end(result);
 }
 
 app.get('/all', onGetAll);
