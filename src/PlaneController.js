@@ -13,33 +13,34 @@ function onGetAll(req, res) {
 }
 
 async function onGetLoc(req, res) {
-  let lat = Number.parseFloat(req.query.lat) || 0;
-  let lng = Number.parseFloat(req.query.lng) || 10000;
-  let max = Number.parseFloat(req.query.max) || 1000;
-  const origin = [lat, lng];
+  let ws = JSON.parse(req.query.ws);
+  let ne = JSON.parse(req.query.ne);
 
   let aggregate = [
     {
-      $geoNear: {
-        near: {type: "Point", coordinates: origin},
-        distanceField: "dist.calculated",
-        includeLocs: "dist.coordinates",
-        maxDistance: max,
-        spherical: true
+      $match: {
+        location: {
+          $geoWithin: {
+            $box: [ws, ne]
+          }
+        }
       }
     },
     {
       $group: {
         _id: "$hex",
         coordinates: {$push: "$location.coordinates"},
-        dist: {$push: "$dist.coordinates"}
       }
     }
   ];
 
+
   let result = await Plane.aggregate(aggregate);
   result.forEach((obj) => {
-    obj.origin = origin;
+    obj.origin = {
+      ws: ws,
+      ne: ne
+    };
   });
 
   res.setHeader('Content-Type', 'application/json');
