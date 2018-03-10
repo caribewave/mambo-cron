@@ -21,8 +21,10 @@ async function onGetLoc(req, res) {
     bbox[i] = Number.parseFloat(coord);
   });
 
-  let result = await planeService.findByBbox(bbox);
+  let result;
 
+  result = await planeService.findByBbox(bbox);
+  result = JSON.stringify(result);
   res.end(result);
 }
 

@@ -15,8 +15,8 @@ const PlaneService = {
   },
 
   async findByBbox(bbox) {
-    let ne = [bbox[2], bbox[3]];
-    let sw = [bbox[0], bbox[1]];
+    let ne = [bbox[3], bbox[2]];
+    let sw = [bbox[1], bbox[0]];
 
     bbox = [sw, ne];
 
