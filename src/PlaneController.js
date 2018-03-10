@@ -5,7 +5,7 @@ let app = express();
 
 
 function onGetAll(req, res) {
-  Plane.aggregate(aggregate, (err, results) => {
+  Plane.find({}, (err, results) => {
     planes = results;
     res.end(JSON.stringify(planes));
   });
@@ -18,7 +18,7 @@ async function onGetLoc(req, res) {
   let bbox = bboxParam.replace("(", "");
   bbox = bbox.replace(")", "");
   bbox = bbox.split(",");
-  bbox.forEach((coordw, i) => {
+  bbox.forEach((coord, i) => {
     bbox[i] = Number.parseFloat(coord);
   });
 
