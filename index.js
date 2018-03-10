@@ -18,7 +18,6 @@ app.get('/', (req, res) => {
     }
 );
 
-new FlightCron().launch();
+// new FlightCron().launch();
 
 app.listen(process.env.PORT || 8082);
-

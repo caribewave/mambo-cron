@@ -13,12 +13,12 @@ const planeSchema = new Schema({
   flightNumber: String,
   updated_at: Date,
   squawk: String,
-  track:Number,
+  track: Number,
   vert_rate: Number,
-  category : String,
+  category: String,
   seen_pos: Number,
   seen: Number,
-  messages:Number,
+  messages: Number,
 
 }, {typeKey: '$type'});
 

@@ -5,7 +5,6 @@ module.exports = class PlaneService {
 
 
   async save(obj) {
-
     if (obj.lat && obj.lon && obj.hex) {
       let plane = await this.find(obj.hex, obj.lat, obj.lon);
 
