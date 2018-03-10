@@ -46,10 +46,10 @@ async function onGetLoc(req, res) {
   ];
 
 
-  let result = await Plane.aggregate(aggregate);
-  result.forEach((obj) => {
-    obj.origin = bbox;
-  });
+  let result = {};
+  result.bboxRequested = bbox;
+  result.points = await Plane.aggregate(aggregate);
+
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(result));
