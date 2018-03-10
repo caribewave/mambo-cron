@@ -13,15 +13,26 @@ function onGetAll(req, res) {
 }
 
 async function onGetLoc(req, res) {
-  let ws = JSON.parse(req.query.ws);
-  let ne = JSON.parse(req.query.ne);
+  let bboxParam = req.query.bbox;
+
+  let bbox = bboxParam.replace("(", "");
+  bbox = bbox.replace(")", "");
+  bbox = bbox.split(",");
+  bbox.forEach((coordw, i) => {
+    bbox[i] = Number.parseFloat(coord);
+  });
+
+  let ws = [bbox[0], bbox[1]];
+  let ne = [bbox[1], bbox[2]];
+
+  bbox = [ws, ne];
 
   let aggregate = [
     {
       $match: {
         location: {
           $geoWithin: {
-            $box: [ws, ne]
+            $box: bbox
           }
         }
       }
@@ -37,10 +48,7 @@ async function onGetLoc(req, res) {
 
   let result = await Plane.aggregate(aggregate);
   result.forEach((obj) => {
-    obj.origin = {
-      ws: ws,
-      ne: ne
-    };
+    obj.origin = bbox;
   });
 
   res.setHeader('Content-Type', 'application/json');
