@@ -22,10 +22,10 @@ async function onGetLoc(req, res) {
     bbox[i] = Number.parseFloat(coord);
   });
 
-  let ws = [bbox[0], bbox[1]];
-  let ne = [bbox[1], bbox[2]];
+  let ne = [bbox[2], bbox[3]];
+  let sw = [bbox[0], bbox[1]];
 
-  bbox = [ws, ne];
+  bbox = [sw, ne];
 
   let aggregate = [
     {
