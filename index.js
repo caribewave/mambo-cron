@@ -26,7 +26,7 @@ const init = async () => {
   await FlightCron.init();
 };
 
-(async function () {
+(async () => {
   await init();
 })();
 
