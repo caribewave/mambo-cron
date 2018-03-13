@@ -23,6 +23,7 @@ const initSensorApi = async () => {
   app.get('/sensor/all', SensorController.onGetAll);
   app.post('/sensor', SensorController.onPost);
   app.get('/sensor/:label', SensorController.onGet);
+  app.delete('/sensor/:label', SensorController.onDelete);
 
   app.get('/', (req, res) => {
         res.end('Bonjour à tous');
