@@ -35,7 +35,7 @@ const initSensorApi = async () => {
 const init = async () => {
   await DB.connect();
   await initSensorApi();
-  // await FlightCron.init();
+  await FlightCron.init();
 };
 
 (async () => {
