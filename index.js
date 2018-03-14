@@ -1,14 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 const DB = require('./lib/db/index');
 
+const Logger = require('./lib/log/Logger')();
+const Spinner = Logger.spinner();
 const FlightCron = require('./lib/cron/flightCron');
-
 const PlaneController = require('./lib/plane/planeController');
 const SensorController = require('./lib/sensor/sensorController');
-
 
 const initSensorApi = async () => {
   let app = express();
@@ -35,9 +34,20 @@ const initSensorApi = async () => {
 
 
 const init = async () => {
+  Logger.info('Initializing app');
+  Spinner.start('Connecting to Database');
   await DB.connect();
+  Spinner.succeed();
+  Spinner.start('Initializing Sensor API');
   await initSensorApi();
+  Spinner.succeed();
+  Spinner.start('Initializing Flight Cron');
   await FlightCron.init();
+  Spinner.succeed();
+  Spinner.start('Initializing Plane Controller');
+  await PlaneController.init();
+  Spinner.succeed();
+  Logger.info('App successfully initialized');
 };
 
 (async () => {
