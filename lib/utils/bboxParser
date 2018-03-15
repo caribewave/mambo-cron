@@ -1,4 +1,4 @@
-const parse = async (bboxParams) => {
+const parse =  (bboxParams) => {
   let bbox = bboxParams.replace("(", "");
   bbox = bbox.replace(")", "");
   bbox = bbox.split(",");
