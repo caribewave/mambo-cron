@@ -4,6 +4,7 @@ RUN mkdir -p /opt/mambo/conf
 WORKDIR /opt/mambo
 
 COPY ./index.js /opt/mambo/
+COPY ./assets /opt/mambo/assets
 COPY ./package.json /opt/mambo/
 COPY ./lib /opt/mambo/lib
 
