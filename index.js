@@ -9,22 +9,31 @@ const FlightCron = require('./lib/cron/flightCron');
 const PlaneController = require('./lib/plane/planeController');
 const SensorController = require('./lib/sensor/sensorController');
 
+
+const setGlobalHeaders = async (req, res, next) => {
+  res.header('Content-Type', 'application/json');
+  next();
+};
+
 const initSensorApi = async () => {
   let app = express();
   app.use(cors());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
 
+  app.get('/*', setGlobalHeaders);
+
   app.get('/planes/all', PlaneController.onGetAll);
   app.get('/planes/loc', PlaneController.onGetLoc);
   app.get('/planes/:hex', PlaneController.onGet);
 
-  app.get('/sensor/all', SensorController.onGetAll);
-  app.post('/sensor', SensorController.onPost);
-  app.get('/sensor/:label', SensorController.onGet);
-  app.delete('/sensor/:label', SensorController.onDelete);
-  app.put('/sensor/:label/activate/:activate', SensorController.onActivate);
-  app.put('/sensor/:label', SensorController.onEdit);
+  app.get('/sensors/all', SensorController.onGetAll);
+  app.get('/sensors/loc', SensorController.onGetLoc);
+  app.get('/sensors/:label', SensorController.onGet);
+  app.post('/sensors', SensorController.onPost);
+  app.delete('/sensors/:label', SensorController.onDelete);
+  app.put('/sensors/:label/activate/:activate', SensorController.onActivate);
+  app.put('/sensors/:label', SensorController.onEdit);
 
   app.get('/', (req, res) => {
         res.end('Bonjour à tous');
@@ -32,7 +41,6 @@ const initSensorApi = async () => {
   );
   app.listen(process.env.PORT || 8082);
 };
-
 
 const init = async () => {
   Logger.info('Initializing app');

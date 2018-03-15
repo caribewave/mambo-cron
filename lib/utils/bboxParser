@@ -1,0 +1,14 @@
+const parse = async (bboxParams) => {
+  let bbox = bboxParams.replace("(", "");
+  bbox = bbox.replace(")", "");
+  bbox = bbox.split(",");
+  bbox.forEach((coord, i) => {
+    bbox[i] = Number.parseFloat(coord);
+  });
+
+  return bbox;
+};
+
+module.exports = {
+  parse
+};
