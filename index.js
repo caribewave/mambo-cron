@@ -24,17 +24,18 @@ const initSensorApi = async () => {
 
   app.get('/*', setGlobalHeaders);
 
-  app.get('/planes/all', PlaneController.onGetAll);
-  app.get('/planes/loc', PlaneController.onGetLoc);
-  app.get('/planes/:hex', PlaneController.onGet);
+  const planeBase = '/planes';
+  app.get(planeBase + '/all', PlaneController.onGetAll);
+  app.get(planeBase + '/loc', PlaneController.onGetLoc);
+  app.get(planeBase + '/:hex', PlaneController.onGet);
 
   const sensorBase = '/sensors';
   app.get(sensorBase + '/all', SensorController.onGetAll);
-  app.get(sensorBase+'/loc', SensorController.onGetLoc);
-  app.get(sensorBase+'/:label', SensorController.onGet);
+  app.get(sensorBase + '/loc', SensorController.onGetLoc);
+  app.get(sensorBase + '/:label', SensorController.onGet);
   app.post(sensorBase, SensorController.onPost);
-  app.delete(sensorBase+'/:label', SensorController.onDelete);
-  app.put(sensorBase+'/:label/activate/:activate', SensorController.onActivate);
+  app.delete(sensorBase + '/:label', SensorController.onDelete);
+  app.put(sensorBase + '/:label/activate/:activate', SensorController.onActivate);
   app.put(sensorBase + '/:label', SensorController.onEdit);
 
 
@@ -44,7 +45,6 @@ const initSensorApi = async () => {
   app.post(boatBase, BoatController.onPost);
   app.put(boatBase + '/:hex', BoatController.onPut);
   app.delete(boatBase + '/:hex', BoatController.onDelete);
-
 
   app.get('/', (req, res) => {
         res.end('Bonjour à tous');
