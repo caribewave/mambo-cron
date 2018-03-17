@@ -28,13 +28,14 @@ const initSensorApi = async () => {
   app.get('/planes/loc', PlaneController.onGetLoc);
   app.get('/planes/:hex', PlaneController.onGet);
 
-  app.get('/sensors/all', SensorController.onGetAll);
-  app.get('/sensors/loc', SensorController.onGetLoc);
-  app.get('/sensors/:label', SensorController.onGet);
-  app.post('/sensors', SensorController.onPost);
-  app.delete('/sensors/:label', SensorController.onDelete);
-  app.put('/sensors/:label/activate/:activate', SensorController.onActivate);
-  app.put('/sensors/:label', SensorController.onEdit);
+  const sensorBase = '/sensors';
+  app.get(sensorBase + '/all', SensorController.onGetAll);
+  app.get(sensorBase+'/loc', SensorController.onGetLoc);
+  app.get(sensorBase+'/:label', SensorController.onGet);
+  app.post(sensorBase, SensorController.onPost);
+  app.delete(sensorBase+'/:label', SensorController.onDelete);
+  app.put(sensorBase+'/:label/activate/:activate', SensorController.onActivate);
+  app.put(sensorBase + '/:label', SensorController.onEdit);
 
 
   const boatBase = '/boats';
