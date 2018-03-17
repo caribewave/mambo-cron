@@ -8,6 +8,7 @@ const Spinner = Logger.spinner();
 const FlightCron = require('./lib/cron/flightCron');
 const PlaneController = require('./lib/plane/planeController');
 const SensorController = require('./lib/sensor/sensorController');
+const BoatController = require('./lib/boat/boatController');
 
 
 const setGlobalHeaders = async (req, res, next) => {
@@ -34,6 +35,15 @@ const initSensorApi = async () => {
   app.delete('/sensors/:label', SensorController.onDelete);
   app.put('/sensors/:label/activate/:activate', SensorController.onActivate);
   app.put('/sensors/:label', SensorController.onEdit);
+
+
+  const boatBase = '/boats';
+  app.get(boatBase + '/all', BoatController.onGetAll);
+  app.get(boatBase + '/:hex', BoatController.onGet);
+  app.post(boatBase, BoatController.onPost);
+  app.put(boatBase + '/:hex', BoatController.onPut);
+  app.delete(boatBase + '/:hex', BoatController.onDelete);
+
 
   app.get('/', (req, res) => {
         res.end('Bonjour à tous');
