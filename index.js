@@ -34,7 +34,9 @@ const initSensorApi = async () => {
 
   const base = '/pois';
   app.get(base + '/:source/:id', SensorController.onGet);
-  app.get(base, SensorController.onGetAll);
+  app.get(base, SensorController.onGetLoc);
+
+  app.delete(base + '/:source/:label', SensorController.onDelete);
 
   app.get(sensorBase + '/all', SensorController.onGetAll);
   app.get(sensorBase + '/loc', SensorController.onGetLoc);
