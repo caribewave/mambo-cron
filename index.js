@@ -24,12 +24,18 @@ const initSensorApi = async () => {
 
   app.get('/*', setGlobalHeaders);
 
+
   const planeBase = '/planes';
   app.get(planeBase + '/all', PlaneController.onGetAll);
   app.get(planeBase + '/loc', PlaneController.onGetLoc);
   app.get(planeBase + '/:hex', PlaneController.onGet);
 
   const sensorBase = '/sensors';
+
+  const base = '/pois';
+  app.get(base + '/:source/:id', SensorController.onGet);
+  app.get(base, SensorController.onGetAll);
+
   app.get(sensorBase + '/all', SensorController.onGetAll);
   app.get(sensorBase + '/loc', SensorController.onGetLoc);
   app.get(sensorBase + '/:label', SensorController.onGet);
