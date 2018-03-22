@@ -10,6 +10,8 @@ const PlaneController = require('./lib/plane/planeController');
 const SensorController = require('./lib/sensor/sensorController');
 const BoatController = require('./lib/boat/boatController');
 
+const PoiController = require('./lib/poi/poiController');
+
 
 const setGlobalHeaders = async (req, res, next) => {
   res.header('Content-Type', 'application/json');
@@ -33,18 +35,13 @@ const initSensorApi = async () => {
   const sensorBase = '/sensors';
 
   const base = '/pois';
-  app.get(base + '/:source/:id', SensorController.onGet);
-  app.get(base, SensorController.onGetLoc);
+  app.get(base + '/:source/:id', PoiController.onGet);
+  app.get(base + '/:source/all', PoiController.onGetAll);
+  app.get(base, PoiController.onGetLoc);
 
-  app.delete(base + '/:source/:label', SensorController.onDelete);
+  app.delete(base + '/:source/:label', PoiController.onDelete);
 
-  app.get(sensorBase + '/all', SensorController.onGetAll);
-  app.get(sensorBase + '/loc', SensorController.onGetLoc);
-  app.get(sensorBase + '/:label', SensorController.onGet);
-  app.post(sensorBase, SensorController.onPost);
-  app.delete(sensorBase + '/:label', SensorController.onDelete);
   app.put(sensorBase + '/:label/activate/:activate', SensorController.onActivate);
-  app.put(sensorBase + '/:label', SensorController.onEdit);
 
 
   const boatBase = '/boats';
