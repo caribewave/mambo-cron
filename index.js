@@ -41,8 +41,9 @@ const initSensorApi = async () => {
 
   app.delete(base + '/:source/:label', PoiController.onDelete);
 
-  app.put(sensorBase + '/:label/activate/:activate', SensorController.onActivate);
+  app.post(base + '/:source', PoiController.onPost);
 
+  app.put(sensorBase + '/:label/activate/:activate', SensorController.onActivate);
 
   const boatBase = '/boats';
   app.get(boatBase + '/all', BoatController.onGetAll);
