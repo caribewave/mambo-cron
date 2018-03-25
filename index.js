@@ -8,7 +8,6 @@ const Spinner = Logger.spinner();
 const FlightCron = require('./lib/cron/flightCron');
 const PlaneController = require('./lib/plane/planeController');
 const SensorController = require('./lib/sensor/sensorController');
-const BoatController = require('./lib/boat/boatController');
 
 const PoiController = require('./lib/poi/poiController');
 
