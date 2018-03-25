@@ -26,15 +26,9 @@ const initSensorApi = async () => {
 
   app.get('/*', setGlobalHeaders);
 
-
-  const planeBase = '/planes';
-  app.get(planeBase + '/all', PlaneController.onGetAll);
-  app.get(planeBase + '/loc', PlaneController.onGetLoc);
-  app.get(planeBase + '/:hex', PlaneController.onGet);
-
   const sensorBase = '/sensors';
-
   const base = '/pois';
+
   app.get(base + '/:source/:id', PoiController.onGet);
   app.get(base + '/:source/all', PoiController.onGetAll);
   app.get(base, PoiController.onGetLoc);
@@ -43,19 +37,10 @@ const initSensorApi = async () => {
 
   app.post(base + '/:source', PoiController.onPost);
 
+  app.put(base + '/:source/:id', PoiController.onEdit);
+
   app.put(sensorBase + '/:label/activate/:activate', SensorController.onActivate);
 
-  const boatBase = '/boats';
-  app.get(boatBase + '/all', BoatController.onGetAll);
-  app.get(boatBase + '/:hex', BoatController.onGet);
-  app.post(boatBase, BoatController.onPost);
-  app.put(boatBase + '/:hex', BoatController.onPut);
-  app.delete(boatBase + '/:hex', BoatController.onDelete);
-
-  app.get('/', (req, res) => {
-        res.end('Bonjour à tous');
-      }
-  );
   app.listen(process.env.PORT || 8082);
 };
 
