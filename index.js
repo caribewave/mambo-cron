@@ -6,7 +6,6 @@ const DB = require('./lib/db/index');
 const Logger = require('./lib/log/Logger')();
 const Spinner = Logger.spinner();
 const FlightCron = require('./lib/cron/flightCron');
-const PlaneController = require('./lib/plane/planeController');
 const SensorController = require('./lib/sensor/sensorController');
 
 const PoiController = require('./lib/poi/poiController');
@@ -54,8 +53,8 @@ const init = async () => {
   Spinner.start('Initializing Flight Cron');
   await FlightCron.init();
   Spinner.succeed();
-  Spinner.start('Initializing Plane Controller');
-  await PlaneController.init();
+  Spinner.start('Initializing Poi Controller');
+  await PoiController.init();
   Spinner.succeed();
   Logger.info('App successfully initialized');
 };
